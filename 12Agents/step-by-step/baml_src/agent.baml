@@ -2,7 +2,7 @@
 type HumanTools = ClarificationRequest | DoneForNow
 
 class ClarificationRequest {
-  intent "request_more_information" @description("clarify math stuff")
+  intent "request_more_information" @description("you can request more information from me")
   message string
 }
 
@@ -33,6 +33,14 @@ function DetermineNextStep(
         What should the next step be?
 
         {{ ctx.output_format }}
+
+        Always think about what to do next first, like:
+
+        - ...
+        - ...
+        - ...
+
+        {...} // schema
     "#
 }
 
@@ -47,7 +55,6 @@ test HelloWorld {
     "#
   }
   @@assert(intent, {{this.intent == "request_more_information"}})
-  // @@assert(intent, {{this.intent == "done_for_now"}})
 }
 
 test MathOperation {
@@ -143,5 +150,3 @@ test MathOperationPostClarification {
   @@assert(b, {{this.a == 3}})
 }
         
-
-
