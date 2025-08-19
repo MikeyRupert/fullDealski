@@ -20,7 +20,7 @@ $ pnpm add @boundaryml/baml
 
 import type { Image, Audio, Pdf, Video } from "@boundaryml/baml"
 import type { Checked, Check } from "./types"
-import type {  Resume } from "./types"
+import type {  DoneForNow,  Resume } from "./types"
 import type * as types from "./types"
 
 /******************************************************************************
@@ -36,6 +36,10 @@ export interface StreamState<T> {
 }
 
 export namespace partial_types {
+    export interface DoneForNow {
+      intent?: "done_for_now" | null
+      message?: string | null
+    }
     export interface Resume {
       name?: string | null
       email?: string | null

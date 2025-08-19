@@ -47,6 +47,12 @@ export function all_succeeded<CheckName extends string>(checks: Record<CheckName
 export function get_checks<CheckName extends string>(checks: Record<CheckName, Check>): Check[] {
     return Object.values(checks)
 }
+export interface DoneForNow {
+  intent: "done_for_now"
+  message: string
+  
+}
+
 export interface Resume {
   name: string
   email: string

@@ -27,6 +27,8 @@ export { FieldType, EnumBuilder, ClassBuilder }
 export default class TypeBuilder {
     private tb: _TypeBuilder;
     
+    DoneForNow: ClassViewer<'DoneForNow', "intent" | "message">;
+    
     Resume: ClassViewer<'Resume', "name" | "email" | "experience" | "skills">;
     
     
@@ -34,13 +36,17 @@ export default class TypeBuilder {
     constructor() {
         this.tb = new _TypeBuilder({
           classes: new Set([
-            "Resume",
+            "DoneForNow","Resume",
           ]),
           enums: new Set([
             
           ]),
           runtime: DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME
         });
+        
+        this.DoneForNow = this.tb.classViewer("DoneForNow", [
+          "intent","message",
+        ]);
         
         this.Resume = this.tb.classViewer("Resume", [
           "name","email","experience","skills",
