@@ -47,9 +47,30 @@ export function all_succeeded<CheckName extends string>(checks: Record<CheckName
 export function get_checks<CheckName extends string>(checks: Record<CheckName, Check>): Check[] {
     return Object.values(checks)
 }
+export interface AddTool {
+  intent: "add"
+  a: number | number
+  b: number | number
+  
+}
+
+export interface DivideTool {
+  intent: "divide"
+  a: number | number
+  b: number | number
+  
+}
+
 export interface DoneForNow {
   intent: "done_for_now"
   message: string
+  
+}
+
+export interface MultiplyTool {
+  intent: "multiply"
+  a: number | number
+  b: number | number
   
 }
 
@@ -60,3 +81,12 @@ export interface Resume {
   skills: string[]
   
 }
+
+export interface SubtractTool {
+  intent: "subtract"
+  a: number | number
+  b: number | number
+  
+}
+
+export type CalculatorTools = AddTool | SubtractTool | MultiplyTool | DivideTool

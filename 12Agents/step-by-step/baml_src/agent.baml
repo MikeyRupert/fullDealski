@@ -5,7 +5,7 @@ class DoneForNow {
 
 function DetermineNextStep(
     thread: string 
-) -> DoneForNow {
+) -> CalculatorTools | DoneForNow {
     client Ollama
 
     prompt #"

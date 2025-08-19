@@ -27,16 +27,24 @@ export { FieldType, EnumBuilder, ClassBuilder }
 export default class TypeBuilder {
     private tb: _TypeBuilder;
     
+    AddTool: ClassViewer<'AddTool', "intent" | "a" | "b">;
+    
+    DivideTool: ClassViewer<'DivideTool', "intent" | "a" | "b">;
+    
     DoneForNow: ClassViewer<'DoneForNow', "intent" | "message">;
     
+    MultiplyTool: ClassViewer<'MultiplyTool', "intent" | "a" | "b">;
+    
     Resume: ClassViewer<'Resume', "name" | "email" | "experience" | "skills">;
+    
+    SubtractTool: ClassViewer<'SubtractTool', "intent" | "a" | "b">;
     
     
 
     constructor() {
         this.tb = new _TypeBuilder({
           classes: new Set([
-            "DoneForNow","Resume",
+            "AddTool","DivideTool","DoneForNow","MultiplyTool","Resume","SubtractTool",
           ]),
           enums: new Set([
             
@@ -44,12 +52,28 @@ export default class TypeBuilder {
           runtime: DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME
         });
         
+        this.AddTool = this.tb.classViewer("AddTool", [
+          "intent","a","b",
+        ]);
+        
+        this.DivideTool = this.tb.classViewer("DivideTool", [
+          "intent","a","b",
+        ]);
+        
         this.DoneForNow = this.tb.classViewer("DoneForNow", [
           "intent","message",
         ]);
         
+        this.MultiplyTool = this.tb.classViewer("MultiplyTool", [
+          "intent","a","b",
+        ]);
+        
         this.Resume = this.tb.classViewer("Resume", [
           "name","email","experience","skills",
+        ]);
+        
+        this.SubtractTool = this.tb.classViewer("SubtractTool", [
+          "intent","a","b",
         ]);
         
         

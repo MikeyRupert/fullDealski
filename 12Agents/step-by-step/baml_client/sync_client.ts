@@ -22,7 +22,7 @@ import type { BamlRuntime, FunctionResult, BamlCtxManager, Image, Audio, Pdf, Vi
 import { toBamlError, type HTTPRequest } from "@boundaryml/baml"
 import type { Checked, Check, RecursivePartialNull as MovedRecursivePartialNull } from "./types"
 import type * as types from "./types"
-import type {DoneForNow, Resume} from "./types"
+import type {AddTool, DivideTool, DoneForNow, MultiplyTool, Resume, SubtractTool} from "./types"
 import type TypeBuilder from "./type_builder"
 import { HttpRequest, HttpStreamRequest } from "./sync_request"
 import { LlmResponseParser, LlmStreamParser } from "./parser"
@@ -92,7 +92,7 @@ export class BamlSyncClient {
   DetermineNextStep(
       thread: string,
       __baml_options__?: BamlCallOptions
-  ): types.DoneForNow {
+  ): AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow {
     try {
       const options = { ...this.bamlOptions, ...(__baml_options__ || {}) }
       const collector = options.collector ? (Array.isArray(options.collector) ? options.collector : [options.collector]) : [];
@@ -111,7 +111,7 @@ export class BamlSyncClient {
         collector,
         env,
       )
-      return raw.parsed(false) as types.DoneForNow
+      return raw.parsed(false) as AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow
     } catch (error: any) {
       throw toBamlError(error);
     }

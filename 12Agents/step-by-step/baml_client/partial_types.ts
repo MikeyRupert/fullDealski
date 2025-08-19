@@ -20,7 +20,7 @@ $ pnpm add @boundaryml/baml
 
 import type { Image, Audio, Pdf, Video } from "@boundaryml/baml"
 import type { Checked, Check } from "./types"
-import type {  DoneForNow,  Resume } from "./types"
+import type {  AddTool,  DivideTool,  DoneForNow,  MultiplyTool,  Resume,  SubtractTool } from "./types"
 import type * as types from "./types"
 
 /******************************************************************************
@@ -36,9 +36,24 @@ export interface StreamState<T> {
 }
 
 export namespace partial_types {
+    export interface AddTool {
+      intent?: "add" | null
+      a?: number | number | null
+      b?: number | number | null
+    }
+    export interface DivideTool {
+      intent?: "divide" | null
+      a?: number | number | null
+      b?: number | number | null
+    }
     export interface DoneForNow {
       intent?: "done_for_now" | null
       message?: string | null
+    }
+    export interface MultiplyTool {
+      intent?: "multiply" | null
+      a?: number | number | null
+      b?: number | number | null
     }
     export interface Resume {
       name?: string | null
@@ -46,4 +61,11 @@ export namespace partial_types {
       experience: string[]
       skills: string[]
     }
+    export interface SubtractTool {
+      intent?: "subtract" | null
+      a?: number | number | null
+      b?: number | number | null
+    }
+export type CalculatorTools = AddTool | SubtractTool | MultiplyTool | DivideTool | null
+
 }

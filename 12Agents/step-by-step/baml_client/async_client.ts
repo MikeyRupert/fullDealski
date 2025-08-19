@@ -23,7 +23,7 @@ import { toBamlError, BamlStream, type HTTPRequest } from "@boundaryml/baml"
 import type { Checked, Check, RecursivePartialNull as MovedRecursivePartialNull } from "./types"
 import type { partial_types } from "./partial_types"
 import type * as types from "./types"
-import type {DoneForNow, Resume} from "./types"
+import type {AddTool, DivideTool, DoneForNow, MultiplyTool, Resume, SubtractTool} from "./types"
 import type TypeBuilder from "./type_builder"
 import { AsyncHttpRequest, AsyncHttpStreamRequest } from "./async_request"
 import { LlmResponseParser, LlmStreamParser } from "./parser"
@@ -90,7 +90,7 @@ export class BamlAsyncClient {
   async DetermineNextStep(
       thread: string,
       __baml_options__?: BamlCallOptions
-  ): Promise<types.DoneForNow> {
+  ): Promise<AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow> {
     try {
       const options = { ...this.bamlOptions, ...(__baml_options__ || {}) }
       const collector = options.collector ? (Array.isArray(options.collector) ? options.collector : [options.collector]) : [];
@@ -109,7 +109,7 @@ export class BamlAsyncClient {
         collector,
         env,
       )
-      return raw.parsed(false) as types.DoneForNow
+      return raw.parsed(false) as AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow
     } catch (error) {
       throw toBamlError(error);
     }
@@ -160,7 +160,7 @@ class BamlStreamClient {
   DetermineNextStep(
       thread: string,
       __baml_options__?: { tb?: TypeBuilder, clientRegistry?: ClientRegistry, collector?: Collector | Collector[], env?: Record<string, string | undefined> }
-  ): BamlStream<partial_types.DoneForNow, types.DoneForNow> {
+  ): BamlStream<AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow, AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow> {
     try {
       const options = { ...this.bamlOptions, ...(__baml_options__ || {}) }
       const collector = options.collector ? (Array.isArray(options.collector) ? options.collector : [options.collector]) : [];
@@ -180,10 +180,10 @@ class BamlStreamClient {
         collector,
         env,
       )
-      return new BamlStream<partial_types.DoneForNow, types.DoneForNow>(
+      return new BamlStream<AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow, AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow>(
         raw,
-        (a): partial_types.DoneForNow => a,
-        (a): types.DoneForNow => a,
+        (a): AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow => a,
+        (a): AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow => a,
         this.ctxManager.cloneContext(),
       )
     } catch (error) {
