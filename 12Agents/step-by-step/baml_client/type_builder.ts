@@ -29,6 +29,8 @@ export default class TypeBuilder {
     
     AddTool: ClassViewer<'AddTool', "intent" | "a" | "b">;
     
+    ClarificationRequest: ClassViewer<'ClarificationRequest', "intent" | "message">;
+    
     DivideTool: ClassViewer<'DivideTool', "intent" | "a" | "b">;
     
     DoneForNow: ClassViewer<'DoneForNow', "intent" | "message">;
@@ -44,7 +46,7 @@ export default class TypeBuilder {
     constructor() {
         this.tb = new _TypeBuilder({
           classes: new Set([
-            "AddTool","DivideTool","DoneForNow","MultiplyTool","Resume","SubtractTool",
+            "AddTool","ClarificationRequest","DivideTool","DoneForNow","MultiplyTool","Resume","SubtractTool",
           ]),
           enums: new Set([
             
@@ -54,6 +56,10 @@ export default class TypeBuilder {
         
         this.AddTool = this.tb.classViewer("AddTool", [
           "intent","a","b",
+        ]);
+        
+        this.ClarificationRequest = this.tb.classViewer("ClarificationRequest", [
+          "intent","message",
         ]);
         
         this.DivideTool = this.tb.classViewer("DivideTool", [

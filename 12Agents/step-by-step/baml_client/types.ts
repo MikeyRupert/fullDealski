@@ -54,6 +54,12 @@ export interface AddTool {
   
 }
 
+export interface ClarificationRequest {
+  intent: "request_more_information"
+  message: string
+  
+}
+
 export interface DivideTool {
   intent: "divide"
   a: number | number
@@ -90,3 +96,5 @@ export interface SubtractTool {
 }
 
 export type CalculatorTools = AddTool | SubtractTool | MultiplyTool | DivideTool
+
+export type HumanTools = ClarificationRequest | DoneForNow

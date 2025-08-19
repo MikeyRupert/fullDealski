@@ -20,7 +20,7 @@ $ pnpm add @boundaryml/baml
 
 import type { Image, Audio, Pdf, Video } from "@boundaryml/baml"
 import type { Checked, Check } from "./types"
-import type {  AddTool,  DivideTool,  DoneForNow,  MultiplyTool,  Resume,  SubtractTool } from "./types"
+import type {  AddTool,  ClarificationRequest,  DivideTool,  DoneForNow,  MultiplyTool,  Resume,  SubtractTool } from "./types"
 import type * as types from "./types"
 
 /******************************************************************************
@@ -40,6 +40,10 @@ export namespace partial_types {
       intent?: "add" | null
       a?: number | number | null
       b?: number | number | null
+    }
+    export interface ClarificationRequest {
+      intent?: "request_more_information" | null
+      message?: string | null
     }
     export interface DivideTool {
       intent?: "divide" | null
@@ -67,5 +71,7 @@ export namespace partial_types {
       b?: number | number | null
     }
 export type CalculatorTools = AddTool | SubtractTool | MultiplyTool | DivideTool | null
+
+export type HumanTools = ClarificationRequest | DoneForNow | null
 
 }

@@ -23,7 +23,7 @@ import { toBamlError } from "@boundaryml/baml"
 import type { Checked, Check } from "./types"
 import type { partial_types } from "./partial_types"
 import type * as types from "./types"
-import type {AddTool, DivideTool, DoneForNow, MultiplyTool, Resume, SubtractTool} from "./types"
+import type {AddTool, ClarificationRequest, DivideTool, DoneForNow, MultiplyTool, Resume, SubtractTool} from "./types"
 import type TypeBuilder from "./type_builder"
 
 export class LlmResponseParser {
@@ -33,7 +33,7 @@ export class LlmResponseParser {
   DetermineNextStep(
       llmResponse: string,
       __baml_options__?: { tb?: TypeBuilder, clientRegistry?: ClientRegistry, env?: Record<string, string | undefined> }
-  ): AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow {
+  ): ClarificationRequest | DoneForNow | AddTool | SubtractTool | MultiplyTool | DivideTool {
     try {
       const rawEnv = __baml_options__?.env ? { ...process.env, ...__baml_options__.env } : { ...process.env };
       const env: Record<string, string> = Object.fromEntries(
@@ -47,7 +47,7 @@ export class LlmResponseParser {
         __baml_options__?.tb?.__tb(),
         __baml_options__?.clientRegistry,
         env,
-      ) as AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow
+      ) as ClarificationRequest | DoneForNow | AddTool | SubtractTool | MultiplyTool | DivideTool
     } catch (error) {
       throw toBamlError(error);
     }
@@ -85,7 +85,7 @@ export class LlmStreamParser {
   DetermineNextStep(
       llmResponse: string,
       __baml_options__?: { tb?: TypeBuilder, clientRegistry?: ClientRegistry, env?: Record<string, string | undefined> }
-  ): AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow {
+  ): ClarificationRequest | DoneForNow | AddTool | SubtractTool | MultiplyTool | DivideTool {
     try {
       const rawEnv = __baml_options__?.env ? { ...process.env, ...__baml_options__.env } : { ...process.env };
       const env: Record<string, string> = Object.fromEntries(
@@ -99,7 +99,7 @@ export class LlmStreamParser {
         __baml_options__?.tb?.__tb(),
         __baml_options__?.clientRegistry,
         env,
-      ) as AddTool | SubtractTool | MultiplyTool | DivideTool | DoneForNow
+      ) as ClarificationRequest | DoneForNow | AddTool | SubtractTool | MultiplyTool | DivideTool
     } catch (error) {
       throw toBamlError(error);
     }
