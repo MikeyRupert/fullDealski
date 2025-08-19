@@ -13,9 +13,21 @@ export class Thread {
     }
 
     serializeForLLM() {
-        // can change this to whatever custom serialization you want to do, XML, etc
-        // e.g. https://github.com/got-agents/agents/blob/59ebbfa236fc376618f16ee08eb0f3bf7b698892/linear-assistant-ts/src/agent.ts#L66-L105
-        return JSON.stringify(this.events, null, 2);
+        return this.events.map(e => this.serializeOneEvent(e)).join("\n");
+    }
+
+    trimLeadingWhitespace(s: string) {
+        return s.replace(/^[ \t]+/gm, '');
+    }
+
+    serializeOneEvent(e: Event) {
+        return this.trimLeadingWhitespace(`
+            <${e.data?.intent || e.type}>
+            ${
+            typeof e.data !== 'object' ? e.data :
+            Object.keys(e.data).filter(k => k !== 'intent').map(k => `${k}: ${e.data[k]}`).join("\n")}
+            </${e.data?.intent || e.type}>
+        `)
     }
 }
 
@@ -49,12 +61,7 @@ export async function handleNextStep(nextStep: CalculatorTool, thread: Thread): 
             });
             return thread;
         case "divide":
-            result = nextStep.a / nextStep.b;
-            console.log("tool_response", result);
-            thread.events.push({
-                "type": "tool_response",
-                "data": result
-            });
+            // divide is scary, return it for human approval
             return thread;
     }
 }
